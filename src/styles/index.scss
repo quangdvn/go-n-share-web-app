@@ -1,0 +1,17 @@
+.chakra-select__wrapper {
+    option:first-child{
+        display: none;
+    }
+}
+.SingleDatePicker {
+    .SingleDatePickerInput__withBorder {
+        border-radius: 3px;
+    }
+    .DateInput_input {
+        font-weight: 400;
+        font-size: 16px !important;
+        line-height: 24px !important;
+        color: black;
+        width: 115%;
+    }
+}

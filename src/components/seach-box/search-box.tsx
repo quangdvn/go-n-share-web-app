@@ -6,6 +6,7 @@ import 'react-dates/lib/css/_datepicker.css';
 import * as moment from 'moment';
 import { cities } from 'src/constants/city-district';
 import { FaExchangeAlt } from 'react-icons/fa';
+import { useRouter } from 'next/router';
 
 interface FormData {
   date: moment.Moment | null;
@@ -20,8 +21,21 @@ export default function SearchBox() {
     departureId: '',
     arrivalId: '',
   });
+  const router = useRouter();
+
+  const handleSearchCoach = () => {
+    const reqBody = {
+      date: formData.date?.format('YYYY-MM-DD'),
+      departureId: formData.departureId,
+      arrivalId: formData.arrivalId,
+    };
+    console.log('reqBody', reqBody);
+    router.push('/result-search');
+  };
   return (
-    <Flex justify="center">
+    <Flex
+      justify={router.pathname === '/result-search' ? 'flex-start' : 'center'}
+    >
       <Box maxW="3xs">
         <Select
           colorScheme="teal"
@@ -114,18 +128,7 @@ export default function SearchBox() {
           inputIconPosition="after"
         />
       </Box>
-      <Button
-        colorScheme="teal"
-        size="md"
-        onClick={() => {
-          const reqBody = {
-            date: formData.date?.format('YYYY-MM-DD'),
-            departureId: formData.departureId,
-            arrivalId: formData.arrivalId,
-          };
-          console.log('reqBody', reqBody);
-        }}
-      >
+      <Button colorScheme="teal" size="md" onClick={handleSearchCoach}>
         TÌM VÉ XE
       </Button>
     </Flex>

@@ -13,9 +13,13 @@ import {
   Button,
 } from '@chakra-ui/react';
 import { BsFillCaretDownFill } from 'react-icons/bs';
-import BookingForm from '../booking-form/booking-form';
+import BookingForm from '../../booking-form/booking-form';
 
-export default function CoachBox() {
+interface CoachBoxProps {
+  key: number;
+}
+
+export default function CoachBox({ key }: CoachBoxProps) {
   const [showBookingForm, setShowBookingForm] = useState(false);
   const property = {
     imageUrl: 'https://bit.ly/2Z4KKcF',
@@ -26,14 +30,18 @@ export default function CoachBox() {
     formattedPrice: '$1,900.00',
     reviewCount: 34,
     rating: 4,
+    id: key,
   };
   return (
     <Box
       borderWidth="1px"
       borderRadius="lg"
       overflow="hidden"
-      maxWidth={700}
+      maxWidth={722}
       maxHeight="auto"
+      margin="0 auto"
+      paddingLeft="15px"
+      marginTop="15px"
     >
       <Flex>
         <Center>
@@ -82,7 +90,9 @@ export default function CoachBox() {
                 <Text fontWeight="extrabold" lineHeight="tight">
                   22:00 &bull;
                 </Text>
-                <Center fontSize="small">Văn phòng Hà Nội</Center>
+                <Center fontSize="sm" marginLeft={2}>
+                  Văn phòng Hà Nội
+                </Center>
               </Flex>
               <Box fontSize="sm" ml={2}>
                 2h40m
@@ -91,26 +101,24 @@ export default function CoachBox() {
                 <Text fontWeight="extrabold" lineHeight="tight">
                   00:40 &bull;
                 </Text>
-                <Center fontSize="small">Ngã ba Cửa Ông</Center>
+                <Center fontSize="sm" marginLeft={2}>
+                  Ngã ba Cửa Ông
+                </Center>
               </Flex>
             </Box>
-            <Box color="blue" fontSize={20} fontWeight="bold">
+            <Box color="#319795" fontSize={22} fontWeight="bold">
               410.000đ
             </Box>
           </Flex>
 
-          <Grid
-            templateColumns="auto auto auto"
-            columnGap="6px"
-            rowGap="6px"
-            mt={2}
-          >
+          <Grid templateColumns="auto auto" columnGap="6px" rowGap="6px" mt={2}>
             {[1, 2, 3, 4, 5].map((data, index) => (
               <GridItem key={index}>
                 <Center
-                  bg="#f28636"
+                  bg="#ED8936"
+                  color="white"
+                  fontWeight="500"
                   fontSize={12}
-                  color="#fff"
                   borderRadius={5}
                 >
                   Tiện nghi
@@ -122,14 +130,14 @@ export default function CoachBox() {
           <Flex mt={3} justifyContent="flex-end">
             <Button
               rightIcon={<BsFillCaretDownFill />}
-              colorScheme="blue"
+              colorScheme="teal"
               variant="outline"
               size="sm"
             >
               Thông tin chi tiêt
             </Button>
             <Button
-              colorScheme="pink"
+              colorScheme="teal"
               variant="solid"
               size="sm"
               ml={1}

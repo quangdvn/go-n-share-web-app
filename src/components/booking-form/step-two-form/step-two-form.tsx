@@ -1,3 +1,4 @@
+/* eslint-disable import/no-cycle */
 /* eslint-disable react/no-children-prop */
 import { useState } from 'react';
 import {
@@ -13,13 +14,14 @@ import {
 } from '@chakra-ui/react';
 import { Field } from 'formik';
 import { BiPhone } from 'react-icons/bi';
+import { IProps } from '../booking-form';
 
 export default function StepTwoForm() {
   const [isTransit, setIsTransit] = useState(false);
   return (
     <Stack spacing={4} padding={10}>
       <Field name="fullName">
-        {({ field }) => (
+        {({ field }: IProps) => (
           <FormControl id="fullName" isRequired>
             <FormLabel>Họ tên</FormLabel>
             <Input placeholder="Họ và tên hành khách" {...field} />
@@ -27,7 +29,7 @@ export default function StepTwoForm() {
         )}
       </Field>
       <Field name="phoneNumber">
-        {({ field }) => (
+        {({ field }: IProps) => (
           <FormControl id="phoneNumber" name="phoneNumber" isRequired>
             <FormLabel>Số điện thoại</FormLabel>
             <InputGroup>
@@ -41,7 +43,7 @@ export default function StepTwoForm() {
         )}
       </Field>
       <Field name="email">
-        {({ field }) => (
+        {({ field }: IProps) => (
           <FormControl id="email" isRequired>
             <FormLabel>Email</FormLabel>
             <Input placeholder="Địa chỉ Email" {...field} />
@@ -62,7 +64,7 @@ export default function StepTwoForm() {
       </FormControl>
       {isTransit && (
         <Field name="transitType">
-          {({ field }) => (
+          {({ field }: IProps) => (
             <FormControl id="transitType">
               <FormLabel>Hình thức transit</FormLabel>
               <Select placeholder="Lựa chọn loại transit" {...field}>
@@ -76,7 +78,7 @@ export default function StepTwoForm() {
       )}
 
       <Field name="note">
-        {({ field }) => (
+        {({ field }: IProps) => (
           <FormControl id="note">
             <FormLabel>Ghi chú</FormLabel>
             <Textarea defaultValue="" size="lg" {...field} />

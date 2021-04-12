@@ -1,140 +1,104 @@
-/* eslint-disable import/no-cycle */
+import { ReactNode } from 'react';
 import {
   Box,
   Flex,
-  Text,
+  Avatar,
+  HStack,
+  Link,
   IconButton,
   Button,
-  Stack,
-  Collapse,
-  useColorModeValue,
-  useBreakpointValue,
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem,
+  MenuDivider,
   useDisclosure,
+  useColorModeValue,
+  Stack,
+  Container,
 } from '@chakra-ui/react';
 import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons';
-import { MobileNav } from './mobile-nav';
-import { DesktopNav } from './desktop-nav';
+import Image from 'next/image';
 
-export interface NavItem {
-  label: string;
-  subLabel?: string;
-  children?: Array<NavItem>;
-  href?: string;
-}
+const Links = ['Dashboard', 'Projects', 'Team'];
 
-export const NAV_ITEMS: Array<NavItem> = [
-  {
-    label: 'Inspiration',
-    children: [
-      {
-        label: 'Explore Design Work',
-        subLabel: 'Trending Design to inspire you',
-        href: '#',
-      },
-      {
-        label: 'New & Noteworthy',
-        subLabel: 'Up-and-coming Designers',
-        href: '#',
-      },
-    ],
-  },
-  {
-    label: 'Find Work',
-    children: [
-      {
-        label: 'Job Board',
-        subLabel: 'Find your dream design job',
-        href: '#',
-      },
-      {
-        label: 'Freelance Projects',
-        subLabel: 'An exclusive list for contract work',
-        href: '#',
-      },
-    ],
-  },
-  {
-    label: 'Learn Design',
-    href: '#',
-  },
-  {
-    label: 'Hire Designers',
-    href: '#',
-  },
-];
+const NavLink = ({ children }: { children: ReactNode }) => (
+  <Link
+    px={2}
+    py={1}
+    rounded="md"
+    _hover={{
+      textDecoration: 'none',
+      bg: useColorModeValue('gray.200', 'gray.700'),
+    }}
+    href="#"
+  >
+    {children}
+  </Link>
+);
 
 export default function Navbar() {
-  const { isOpen, onToggle } = useDisclosure();
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
-    <Box>
-      <Flex
-        bg={useColorModeValue('white', 'gray.800')}
-        color={useColorModeValue('gray.600', 'white')}
-        minH="60px"
-        py={{ base: 2 }}
-        px={{ base: 4 }}
-        borderBottom={1}
-        borderStyle="solid"
-        borderColor={useColorModeValue('gray.200', 'gray.900')}
-        align="center"
-      >
-        <Flex
-          flex={{ base: 1, md: 'auto' }}
-          ml={{ base: -2 }}
-          display={{ base: 'flex', md: 'none' }}
-        >
-          <IconButton
-            onClick={onToggle}
-            icon={
-              isOpen ? <CloseIcon w={3} h={3} /> : <HamburgerIcon w={5} h={5} />
-            }
-            variant="ghost"
-            aria-label="Toggle Navigation"
-          />
-        </Flex>
-        <Flex flex={{ base: 1 }} justify={{ base: 'center', md: 'start' }}>
-          <Text
-            textAlign={useBreakpointValue({ base: 'center', md: 'left' })}
-            fontFamily="heading"
-            color={useColorModeValue('gray.800', 'white')}
-          >
-            Logo
-          </Text>
-
-          <Flex display={{ base: 'none', md: 'flex' }} ml={10}>
-            <DesktopNav />
+    <>
+      <Box boxShadow="rgba(0, 0, 0, 0.05) 0px 3px 5px" px={4}>
+        <Container maxW="7xl">
+          <Flex h={16} alignItems="center" justifyContent="space-between">
+            <IconButton
+              size="md"
+              icon={isOpen ? <CloseIcon /> : <HamburgerIcon />}
+              aria-label="Open Menu"
+              display={{ md: !isOpen ? 'none' : 'inherit' }}
+              onClick={isOpen ? onClose : onOpen}
+            />
+            <HStack spacing={8} alignItems="center">
+              <Image
+                src="/Light-Logo.svg"
+                alt="Picture of the author"
+                width={60}
+                height={66}
+              />
+              <HStack as="nav" spacing={4} display="flex">
+                {Links.map(link => (
+                  <NavLink key={link}>{link}</NavLink>
+                ))}
+              </HStack>
+            </HStack>
+            <Flex alignItems="center">
+              <Menu>
+                <MenuButton
+                  as={Button}
+                  rounded="full"
+                  variant="link"
+                  cursor="pointer"
+                >
+                  <Avatar
+                    size="sm"
+                    src="https://images.unsplash.com/photo-1493666438817-866a91353ca9?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=b616b2c5b373a80ffc9636ba24f7a4a9"
+                  />
+                </MenuButton>
+                <MenuList>
+                  <MenuItem>Link 1</MenuItem>
+                  <MenuItem>Link 2</MenuItem>
+                  <MenuDivider />
+                  <MenuItem>Link 3</MenuItem>
+                </MenuList>
+              </Menu>
+            </Flex>
           </Flex>
-        </Flex>
+        </Container>
 
-        <Stack
-          flex={{ base: 1, md: 0 }}
-          justify="flex-end"
-          direction="row"
-          spacing={6}
-        >
-          <Button as="a" fontSize="sm" fontWeight={400} variant="link" href="#">
-            Sign In
-          </Button>
-          <Button
-            display={{ base: 'none', md: 'inline-flex' }}
-            fontSize="sm"
-            fontWeight={600}
-            color="white"
-            bg="pink.400"
-            href="#"
-            _hover={{
-              bg: 'pink.300',
-            }}
-          >
-            Sign Up
-          </Button>
-        </Stack>
-      </Flex>
-
-      <Collapse in={isOpen} animateOpacity>
-        <MobileNav />
-      </Collapse>
-    </Box>
+        {isOpen ? (
+          <Box pb={4}>
+            <Stack as="nav" spacing={4}>
+              {Links.map(link => (
+                <NavLink key={link}>{link}</NavLink>
+              ))}
+            </Stack>
+          </Box>
+        ) : null}
+      </Box>
+    </>
   );
 }

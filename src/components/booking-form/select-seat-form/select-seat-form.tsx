@@ -12,6 +12,7 @@ import {
 } from '@chakra-ui/react';
 import { Field } from 'formik';
 import { ImCheckboxChecked } from 'react-icons/im';
+import { IProps } from '../booking-form';
 
 export default function SelectSeatForm() {
   return (
@@ -39,7 +40,7 @@ export default function SelectSeatForm() {
         </VStack>
         <Stack spacing={10} direction="row">
           <Field name="seatNumber">
-            {({ field }) => (
+            {({ field }: IProps) => (
               <FormControl id="seatNumber" name="seatNumber">
                 <CheckboxGroup colorScheme="green">
                   <SimpleGrid columns={2} spacing={2} marginTop={10}>

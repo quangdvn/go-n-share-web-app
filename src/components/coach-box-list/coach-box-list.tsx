@@ -5,7 +5,7 @@ import CoachBox from './coach-box/coach-box';
 export default function CoachBoxList() {
   return (
     <Box>
-      {[1, 2, 3, 4, 5].map((data, index) => (
+      {[1, 2, 3, 4, 5].map((_data, index) => (
         <CoachBox key={index} />
       ))}
     </Box>

@@ -1,4 +1,4 @@
-export const color = {
+export const ColorPalette = {
   darkPrimaryColor: '#AFB42B',
   primaryColor: '#CDDC39',
   lightPrimaryColor: '#F0F4C3',

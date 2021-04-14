@@ -18,3 +18,10 @@ export const cities = [
     name: Location.QUANGNINH,
   },
 ];
+
+export const MappingCityData: { [key: string]: string } = {
+  [Location.HANOI_SUBNAME]: Location.HANOI,
+  [Location.HOCHIMINH_SUBNAME]: Location.HOCHIMINH,
+  [Location.DANANG_SUBNAME]: Location.DANANG,
+  [Location.QUANGNINH_SUBNAME]: Location.QUANGNINH,
+};

@@ -1,5 +1,6 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/no-children-prop */
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { StarIcon } from '@chakra-ui/icons';
 import {
   Badge,
@@ -12,7 +13,7 @@ import {
   GridItem,
   Button,
 } from '@chakra-ui/react';
-import { BsFillCaretDownFill } from 'react-icons/bs';
+import { amenities } from 'src/constants/amenities';
 import BookingForm from '../../booking-form/booking-form';
 
 interface CoachBoxProps {
@@ -21,17 +22,22 @@ interface CoachBoxProps {
 
 export default function CoachBox({ key }: CoachBoxProps) {
   const [showBookingForm, setShowBookingForm] = useState(false);
-  const property = {
-    imageUrl: 'https://bit.ly/2Z4KKcF',
-    imageAlt: 'Rear view of modern home with pool',
-    beds: 3,
-    baths: 2,
-    title: 'Trung Thành Limousine',
-    formattedPrice: '$1,900.00',
-    reviewCount: 34,
-    rating: 4,
-    id: key,
-  };
+  const property = useMemo(() => {
+    const resData = {
+      id: key,
+      imageUrl: `/image/${Math.floor(Math.random() * 15 + 1)}.jpeg`,
+      imageAlt: 'Rear view of modern home with pool',
+      beds: 3,
+      baths: 2,
+      title: 'Trung Thành Limousine',
+      formattedPrice: '$1,900.00',
+      reviewCount: Math.floor(Math.random() * 35 + 10),
+      rating: Math.floor(Math.random() * 5 + 1),
+      vip: Math.floor(Math.random() * 2 + 1),
+      amenities: amenities[Math.floor(Math.random() * 5)],
+    };
+    return resData;
+  }, []);
   return (
     <Box
       borderWidth="1px"
@@ -48,17 +54,19 @@ export default function CoachBox({ key }: CoachBoxProps) {
           <Image
             src={property.imageUrl}
             alt={property.imageAlt}
-            maxWidth={250}
-            maxHeight={250}
+            width={250}
+            height={185}
           />
         </Center>
 
         <Box p="6" width="100%">
           <Flex justifyContent="space-between">
-            <Box>
-              <Badge borderRadius="full" px="2" colorScheme="teal">
-                New
-              </Badge>
+            <Flex justifyContent="flex-start">
+              {property.vip === 1 && (
+                <Badge borderRadius="full" px="2" colorScheme="teal">
+                  VIP
+                </Badge>
+              )}
               <Badge
                 color="gray.500"
                 fontWeight="semibold"
@@ -69,7 +77,8 @@ export default function CoachBox({ key }: CoachBoxProps) {
               >
                 Limousine 11 chỗ
               </Badge>
-            </Box>
+            </Flex>
+
             <Center>
               {Array(5)
                 .fill('')
@@ -106,39 +115,45 @@ export default function CoachBox({ key }: CoachBoxProps) {
                 </Center>
               </Flex>
             </Box>
-            <Box color="#319795" fontSize={22} fontWeight="bold">
+            <Box color="accentColor" fontSize={22} fontWeight="bold">
               410.000đ
             </Box>
           </Flex>
 
-          <Grid templateColumns="auto auto" columnGap="6px" rowGap="6px" mt={2}>
-            {[1, 2, 3, 4, 5].map((data, index) => (
+          <Grid
+            templateColumns="auto auto auto"
+            columnGap="6px"
+            rowGap="6px"
+            mt={2}
+            width="250px"
+          >
+            {property.amenities.map((data, index) => (
               <GridItem key={index}>
                 <Center
-                  bg="#ED8936"
+                  bg="#e0992b"
                   color="white"
                   fontWeight="500"
                   fontSize={12}
                   borderRadius={5}
                 >
-                  Tiện nghi
+                  {data}
                 </Center>
               </GridItem>
             ))}
           </Grid>
 
           <Flex mt={3} justifyContent="flex-end">
-            <Button
+            {/* <Button
               rightIcon={<BsFillCaretDownFill />}
-              colorScheme="teal"
+              bg="primaryColor"
+              color="black"
               variant="outline"
               size="sm"
             >
               Thông tin chi tiêt
-            </Button>
+            </Button> */}
             <Button
               colorScheme="teal"
-              variant="solid"
               size="sm"
               ml={1}
               onClick={() => {

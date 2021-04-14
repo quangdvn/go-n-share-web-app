@@ -1,27 +1,34 @@
-import { useState } from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+import { useState, useEffect } from 'react';
 import { Select, Button, Box, Flex, Icon, Center } from '@chakra-ui/react';
 import 'react-dates/initialize';
 import { SingleDatePicker } from 'react-dates';
 import 'react-dates/lib/css/_datepicker.css';
-import * as moment from 'moment';
+import moment from 'moment';
 import { cities } from 'src/constants/city-district';
 import { FaExchangeAlt } from 'react-icons/fa';
 import { useRouter } from 'next/router';
 
-interface FormData {
+export interface FormData {
   date: moment.Moment | null;
   departureId: string;
   arrivalId: string;
 }
 
 export default function SearchBox() {
+  const router = useRouter();
   const [focused, setFocused] = useState(false);
   const [formData, setFormData] = useState<FormData>({
-    date: moment.default(),
+    date: router.query.date ? moment(router.query.date) : moment(),
     departureId: '',
     arrivalId: '',
   });
-  const router = useRouter();
+  useEffect(() => {
+    if (router.query.date) {
+      setFormData({ ...formData, date: moment(router.query.date) });
+    }
+  }, [router.query]);
 
   const handleSearchCoach = () => {
     const reqBody = {
@@ -30,11 +37,16 @@ export default function SearchBox() {
       arrivalId: formData.arrivalId,
     };
     console.log('reqBody', reqBody);
-    router.push('/result-search');
+    router.push({
+      pathname: '/result-search',
+      query: reqBody,
+    });
   };
   return (
     <Flex
       justify={router.pathname === '/result-search' ? 'flex-start' : 'center'}
+      height="80%"
+      alignItems="center"
     >
       <Box maxW="3xs">
         <Select
@@ -58,7 +70,10 @@ export default function SearchBox() {
             <option
               value={city.sub_name}
               key={index}
-              selected={formData.departureId === city.sub_name}
+              selected={
+                formData.departureId === city.sub_name ||
+                (router.query && router.query.departureId === city.sub_name)
+              }
             >
               {city.name}
             </option>
@@ -102,7 +117,10 @@ export default function SearchBox() {
             <option
               value={city.sub_name}
               key={index}
-              selected={formData.arrivalId === city.sub_name}
+              selected={
+                formData.arrivalId === city.sub_name ||
+                (router.query && router.query.arrivalId === city.sub_name)
+              }
             >
               {city.name}
             </option>

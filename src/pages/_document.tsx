@@ -7,6 +7,7 @@ export default class Document extends NextDocument {
       <Html>
         <Head>
           <link rel="shortcut icon" href="/favicon.ico" />
+          <meta name="description" content="Free Web tutorials" />
         </Head>
 
         <body>

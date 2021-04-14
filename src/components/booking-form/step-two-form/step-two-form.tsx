@@ -55,6 +55,7 @@ export default function StepTwoForm() {
           Bạn có muốn đi xe transit không?
         </FormLabel>
         <Switch
+          colorScheme="teal"
           id="has_transit"
           paddingTop={5}
           onChange={() => {

@@ -28,7 +28,7 @@ export default function ResultSearch() {
   return (
     <>
       <Narbar />
-      <Container maxW="8xl" marginTop={2}>
+      <Container maxW="7xl" marginTop={2}>
         <RouteBreadCrumb />
         <SearchBox />
         <TotalCoachText />

@@ -11,6 +11,7 @@ import {
   InputLeftElement,
   Switch,
   Select,
+  Box,
 } from '@chakra-ui/react';
 import { Field } from 'formik';
 import { BiPhone } from 'react-icons/bi';
@@ -50,32 +51,53 @@ export default function StepTwoForm() {
           </FormControl>
         )}
       </Field>
-      <FormControl alignItems="center">
-        <FormLabel htmlFor="has_transit" mb="0">
-          Bạn có muốn đi xe transit không?
-        </FormLabel>
-        <Switch
-          colorScheme="teal"
-          id="has_transit"
-          paddingTop={5}
-          onChange={() => {
-            setIsTransit(!isTransit);
-          }}
-        />
-      </FormControl>
+      <Field name="hasTransit">
+        {({ field }: IProps) => (
+          <FormControl alignItems="center">
+            <FormLabel mb="0">Bạn có muốn đi xe transit không?</FormLabel>
+            <Switch
+              {...field}
+              colorScheme="teal"
+              id="hasTransit"
+              paddingTop={5}
+              onChange={() => {
+                setIsTransit(!isTransit);
+              }}
+            />
+          </FormControl>
+        )}
+      </Field>
       {isTransit && (
-        <Field name="transitType">
-          {({ field }: IProps) => (
-            <FormControl id="transitType">
-              <FormLabel>Hình thức transit</FormLabel>
-              <Select placeholder="Lựa chọn loại transit" {...field}>
-                <option value="1">Chiều đi</option>
-                <option value="2">Chiều về</option>
-                <option value="3">Hai chiều</option>
-              </Select>
-            </FormControl>
-          )}
-        </Field>
+        <Stack spacing={4}>
+          <Field name="transitType">
+            {({ field }: IProps) => (
+              <FormControl id="transitType">
+                <FormLabel>Hình thức transit</FormLabel>
+                <Select placeholder="Lựa chọn loại transit" {...field}>
+                  <option value="1">Chiều đi</option>
+                  <option value="2">Chiều về</option>
+                  <option value="3">Hai chiều</option>
+                </Select>
+              </FormControl>
+            )}
+          </Field>
+          <Field name="address" mt={5}>
+            {({ field }: IProps) => (
+              <FormControl id="address" isRequired>
+                <FormLabel>Địa chỉ đón</FormLabel>
+                <Input placeholder="Địa chỉ" {...field} />
+              </FormControl>
+            )}
+          </Field>
+          <Field name="transitNote" mt={5}>
+            {({ field }: IProps) => (
+              <FormControl id="transitNote">
+                <FormLabel>Ghi chú Transit</FormLabel>
+                <Textarea defaultValue="" size="lg" {...field} />
+              </FormControl>
+            )}
+          </Field>
+        </Stack>
       )}
 
       <Field name="note">

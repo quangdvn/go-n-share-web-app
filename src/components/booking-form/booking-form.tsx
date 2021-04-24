@@ -7,14 +7,33 @@ import { IoMdArrowRoundBack } from 'react-icons/io';
 import StepOneForm from './step-one-form/step-one-form';
 import StepTwoForm from './step-two-form/step-two-form';
 import StepThreeForm from './step-three-form/step-three-form';
-
+import { bookingTrip } from '../../api/action';
 export interface IProps {
   field: any;
 }
 
 export default function BookingForm() {
   const [progressValue, setProgressValue] = useState(1);
-
+  const handleBookingSubmit = async values => {
+    console.log('reqBody', values);
+    const reqBody = {
+      tripId: 1,
+      price: 100000,
+      bookingName: values.fullName,
+      bookingPhone: values.phoneNumber,
+      bookingMail: values.email,
+      hasTransit: values.hasTrasit,
+      notes: values.note,
+      paymentMethod: values.paymentMethod,
+      transitDetail: {
+        address: values.address,
+        latitude: '109.54545',
+        longitude: '109.54545',
+        notes: values.transitNote,
+      },
+    };
+    // await bookingTrip(reqBody);
+  };
   return (
     <Box>
       <Formik
@@ -25,9 +44,12 @@ export default function BookingForm() {
           email: '',
           note: '',
           transitType: '',
+          hasTransit: false,
+          address: '',
+          transitNote: '',
         }}
         onSubmit={values => {
-          console.log(values);
+          handleBookingSubmit(values);
         }}
       >
         <Form>

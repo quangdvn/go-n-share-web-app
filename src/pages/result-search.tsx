@@ -38,15 +38,15 @@ export default function ResultSearch() {
       <Narbar />
       <Container maxW="7xl" marginTop={2}>
         <RouteBreadCrumb
-          departure={MappingCityData[`${query?.departureId}`]}
-          arrival={MappingCityData[`${query?.arrivalId}`]}
+          departure={MappingCityData[`${query?.departure}`]}
+          arrival={MappingCityData[`${query?.arrive}`]}
         />
         <SearchBox />
         <TotalCoachText
-          departure={MappingCityData[`${query?.departureId}`]}
-          arrival={MappingCityData[`${query?.arrivalId}`]}
+          departure={MappingCityData[`${query?.departure}`]}
+          arrival={MappingCityData[`${query?.arrive}`]}
         />
-        <CoachBoxList />
+        <CoachBoxList reqBody = {query}/>
       </Container>
       <Footer />
     </>

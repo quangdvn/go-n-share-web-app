@@ -8,12 +8,8 @@ export default function StepThreeForm() {
       <FormControl name="paymentMethod">
         <FormLabel>Vui lòng chọn phương thức thanh toán</FormLabel>
         <Flex alignItems="center">
-          <Field type="radio" name="paymentMethod" value="1" />
+          <Field type="radio" name="paymentMethod" value="cash" checked />
           <Text marginLeft={5}>Tiền mặt</Text>
-        </Flex>
-        <Flex alignItems="center">
-          <Field type="radio" name="paymentMethod" value="2" />
-          <Text marginLeft={5}>MoMo</Text>
         </Flex>
       </FormControl>
     </Box>

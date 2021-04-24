@@ -9,7 +9,7 @@ import moment from 'moment';
 import { cities } from 'src/constants/city-district';
 import { FaExchangeAlt } from 'react-icons/fa';
 import { useRouter } from 'next/router';
-
+import { searchTrip } from '../../api/action';
 export interface FormData {
   date: moment.Moment | null;
   departureId: string;
@@ -20,27 +20,33 @@ export default function SearchBox() {
   const router = useRouter();
   const [focused, setFocused] = useState(false);
   const [formData, setFormData] = useState<FormData>({
-    date: router.query.date ? moment(router.query.date) : moment(),
+    date: router.query.departureDate
+      ? moment(router.query.departureDate)
+      : moment(),
     departureId: '',
     arrivalId: '',
   });
   useEffect(() => {
-    if (router.query.date) {
-      setFormData({ ...formData, date: moment(router.query.date) });
+    if (router.query.departureDate) {
+      setFormData({ ...formData, date: moment(router.query.departureDate) });
     }
   }, [router.query]);
 
-  const handleSearchCoach = () => {
+  const handleSearchTrip = async () => {
     const reqBody = {
-      date: formData.date?.format('YYYY-MM-DD'),
-      departureId: formData.departureId,
-      arrivalId: formData.arrivalId,
+      departure: formData.departureId,
+      arrive: formData.arrivalId,
+      departureDate: formData.date?.format('YYYY-MM-DD'),
     };
-    console.log('reqBody', reqBody);
-    router.push({
-      pathname: '/result-search',
-      query: reqBody,
-    });
+    console.log('1', reqBody);
+    const res = await searchTrip(reqBody);
+    if (res) {
+      console.log(res);
+      // router.push({
+      //   pathname: '/result-search',
+      //   query: reqBody,
+      // });
+    }
   };
   return (
     <Flex
@@ -72,7 +78,7 @@ export default function SearchBox() {
               key={index}
               selected={
                 formData.departureId === city.sub_name ||
-                (router.query && router.query.departureId === city.sub_name)
+                (router.query && router.query.departure === city.sub_name)
               }
             >
               {city.name}
@@ -119,7 +125,7 @@ export default function SearchBox() {
               key={index}
               selected={
                 formData.arrivalId === city.sub_name ||
-                (router.query && router.query.arrivalId === city.sub_name)
+                (router.query && router.query.arrive === city.sub_name)
               }
             >
               {city.name}
@@ -146,7 +152,7 @@ export default function SearchBox() {
           inputIconPosition="after"
         />
       </Box>
-      <Button colorScheme="teal" size="md" onClick={handleSearchCoach}>
+      <Button colorScheme="teal" size="md" onClick={handleSearchTrip}>
         TÌM VÉ XE
       </Button>
     </Flex>

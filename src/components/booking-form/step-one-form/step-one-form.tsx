@@ -1,7 +1,15 @@
 /* eslint-disable react/no-children-prop */
 import { Box, Flex, Center, Text, Radio, Divider } from '@chakra-ui/react';
 
-export default function StepOneForm() {
+interface StepOneFormProps {
+  departureTerminal: string;
+  arriveTerminal: string;
+}
+
+export default function StepOneForm({
+  departureTerminal,
+  arriveTerminal,
+}: StepOneFormProps) {
   return (
     <Flex justify="space-around" padding={10}>
       <Box>
@@ -9,7 +17,7 @@ export default function StepOneForm() {
           Điểm đón
         </Text>
         <Radio colorScheme="green" value="2" isChecked>
-          <Text>22:00 &#149; Bến xe Mỹ Đình</Text>
+          <Text>22:00 &#149; Bến xe {departureTerminal}</Text>
         </Radio>
       </Box>
       <Center height="150px" color="#171923">
@@ -25,7 +33,7 @@ export default function StepOneForm() {
           Điểm trả
         </Text>
         <Radio colorScheme="green" value="2" isChecked>
-          <Text>22:00 &#149; Bến xe Móng Cái</Text>
+          <Text>22:00 &#149; Bến xe {arriveTerminal}</Text>
         </Radio>
       </Box>
     </Flex>

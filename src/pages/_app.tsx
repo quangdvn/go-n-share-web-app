@@ -3,6 +3,7 @@ import { AppProps } from 'next/app';
 import Head from 'next/head';
 import theme from '../theme';
 import '../styles/styles.scss';
+import 'leaflet/dist/leaflet.css';
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (

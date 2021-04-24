@@ -25,3 +25,10 @@ export const MappingCityData: { [key: string]: string } = {
   [Location.DANANG_SUBNAME]: Location.DANANG,
   [Location.QUANGNINH_SUBNAME]: Location.QUANGNINH,
 };
+
+export const MappingPostCodeCity: { [key: string]: number } = {
+  [Location.HANOI_SUBNAME]: 18410000,
+  [Location.HOCHIMINH_SUBNAME]: 18470000,
+  [Location.DANANG_SUBNAME]: 18450000,
+  [Location.QUANGNINH_SUBNAME]: 18401000,
+};

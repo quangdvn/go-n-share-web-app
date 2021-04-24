@@ -42,75 +42,35 @@ interface TerminalProps {
   coaches: Coach[];
 }
 
-export default function CoachBoxList({ reqBody }) {
-  const [terminalList, setTerminalList] = useState<TerminalProps[]>([
-    {
-      routeId: 1,
-      drivingDuration: 3,
-      basePrice: 100000,
-      departureTerminal: 'Mỹ Đình',
-      departureAddress: 'Từ Liêm, Hà Nội',
-      departureLatitude: '21.0284120968974',
-      departureLongitude: '105.77828474956691',
-      arriveTerminal: 'Móng Cái',
-      arriveAddress: 'Móng Cái, Quảng Ninh',
-      arriveLatitude: '21.531268567427237',
-      arriveLongitude: '107.95835730996707',
-      coaches: [
-        {
-          id: 17,
-          routeId: 1,
-          name: 'Medium #17',
-          numberPlate: '29A-72649',
-          isAvailable: true,
-          trips: [],
-          seatNumber: 40,
-        },
-        {
-          id: 59,
-          routeId: 1,
-          name: 'Small #59',
-          numberPlate: '29A-43817',
-          isAvailable: true,
-          trips: [],
-          seatNumber: 30,
-        },
-      ],
-    },
-    {
-      routeId: 11,
-      drivingDuration: 3,
-      basePrice: 100000,
-      departureTerminal: 'Gia Lâm',
-      departureAddress: 'Long Biên, Hà Nội',
-      departureLatitude: '21.048545080619885',
-      departureLongitude: '105.87831089646433',
-      arriveTerminal: 'Móng Cái',
-      arriveAddress: 'Móng Cái, Quảng Ninh',
-      arriveLatitude: '21.531268567427237',
-      arriveLongitude: '107.95835730996707',
-      coaches: [],
-    },
-  ]);
+interface CoachBoxListProps {
+  reqBody: any;
+}
+
+export default function CoachBoxList({ reqBody }: CoachBoxListProps) {
+  const [terminalList, setTerminalList] = useState<TerminalProps[]>([]);
 
   useEffect(() => {
     const getTerminalList = async () => {
       const res = await searchTrip(reqBody);
-      console.log('response', res);
       setTerminalList(res);
     };
     getTerminalList();
   }, []);
 
-  return (
-    terminalList.length &&
-    terminalList.map((terminal, index) => (
-      <Terminal
-        key={index}
-        departureTerminal={terminal.departureTerminal}
-        arriveTerminal={terminal.arriveTerminal}
-        coaches={terminal.coaches}
-      />
-    ))
-  );
+  if (terminalList.length > 0) {
+    return (
+      <>
+        {terminalList.map((terminal, index) => (
+          <Terminal
+            key={index}
+            departureTerminal={terminal.departureTerminal}
+            arriveTerminal={terminal.arriveTerminal}
+            coaches={terminal.coaches}
+            basePrice={terminal.basePrice}
+          />
+        ))}
+      </>
+    );
+  }
+  return <Box />;
 }

@@ -1,7 +1,15 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 import { useState, useEffect } from 'react';
-import { Select, Button, Box, Flex, Icon, Center } from '@chakra-ui/react';
+import {
+  Select,
+  Button,
+  Box,
+  Flex,
+  Icon,
+  Center,
+  Spinner,
+} from '@chakra-ui/react';
 import 'react-dates/initialize';
 import { SingleDatePicker } from 'react-dates';
 import 'react-dates/lib/css/_datepicker.css';
@@ -10,6 +18,7 @@ import { cities } from 'src/constants/city-district';
 import { FaExchangeAlt } from 'react-icons/fa';
 import { useRouter } from 'next/router';
 import { searchTrip } from '../../api/action';
+
 export interface FormData {
   date: moment.Moment | null;
   departureId: string;
@@ -19,6 +28,7 @@ export interface FormData {
 export default function SearchBox() {
   const router = useRouter();
   const [focused, setFocused] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState<FormData>({
     date: router.query.departureDate
       ? moment(router.query.departureDate)
@@ -36,16 +46,16 @@ export default function SearchBox() {
     const reqBody = {
       departure: formData.departureId,
       arrive: formData.arrivalId,
-      departureDate: formData.date?.format('YYYY-MM-DD'),
+      departureDate: formData.date?.format('YYYY/MM/DD'),
     };
-    console.log('1', reqBody);
+    setLoading(true);
     const res = await searchTrip(reqBody);
     if (res) {
-      console.log(res);
-      // router.push({
-      //   pathname: '/result-search',
-      //   query: reqBody,
-      // });
+      router.push({
+        pathname: '/result-search',
+        query: reqBody,
+      });
+      setLoading(false);
     }
   };
   return (
@@ -152,9 +162,13 @@ export default function SearchBox() {
           inputIconPosition="after"
         />
       </Box>
-      <Button colorScheme="teal" size="md" onClick={handleSearchTrip}>
-        TÌM VÉ XE
-      </Button>
+      {loading ? (
+        <Spinner size="lg" color="teal" padding={5} ml={10} />
+      ) : (
+        <Button colorScheme="teal" size="md" onClick={handleSearchTrip}>
+          TÌM VÉ XE
+        </Button>
+      )}
     </Flex>
   );
 }

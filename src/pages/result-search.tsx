@@ -25,7 +25,7 @@ const RouteBreadCrumb = ({ departure, arrival }: RouteBreadCrumbProps) => (
 export default function ResultSearch() {
   const router = useRouter();
   const { query } = router;
-
+  console.log('query', query);
   return (
     <>
       <Narbar />
@@ -35,7 +35,7 @@ export default function ResultSearch() {
           arrival={MappingCityData[`${query?.arrive}`]}
         />
         <SearchBox />
-        <CoachBoxList reqBody={query} />
+        <CoachBoxList reqBody={query.departure && query} />
       </Container>
       <Footer />
     </>

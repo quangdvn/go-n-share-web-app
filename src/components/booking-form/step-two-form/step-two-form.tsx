@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 /* eslint-disable prefer-destructuring */
 /* eslint-disable global-require */
 /* eslint-disable @typescript-eslint/ban-types */
@@ -19,12 +20,11 @@ import {
 } from '@chakra-ui/react';
 import { Field, useFormikContext } from 'formik';
 import { BiPhone } from 'react-icons/bi';
-import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import { useRouter } from 'next/router';
 import { MappingPostCodeCity } from 'src/constants/city-district';
-import { Icon } from 'leaflet';
 import { IProps } from '../booking-form';
 import { getCoordinates } from '../../../api/action';
+import LeafletMap from '../../Map/Map';
 
 export interface FormikProps {
   paymentMethod: string;
@@ -45,7 +45,6 @@ export default function StepTwoForm() {
   const [loading, setLoading] = useState(false);
   const { values, setValues } = useFormikContext<FormikProps>();
   const router = useRouter();
-
   const handleGetLocation = async () => {
     const { address } = values;
     const postCode = MappingPostCodeCity[`${router.query.departure}`];
@@ -55,6 +54,39 @@ export default function StepTwoForm() {
     setCoordinates([res[1], res[0]]);
     setValues({ ...values, location: [`${res[1]}`, `${res[0]}`] });
   };
+
+  // const renderMap = () => {
+  //   const { MapContainer, TileLayer, Marker, Popup } = require('react-leaflet');
+  //   return (
+  //     <MapContainer
+  //       center={coordinates}
+  //       zoom={13}
+  //       scrollWheelZoom={false}
+  //       style={{ height: 400, width: '100%' }}
+  //     >
+  //       <TileLayer
+  //         attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+  //         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+  //       />
+  //       <Marker
+  //         position={coordinates}
+  //         icon={
+  //           new Icon({
+  //             iconUrl: 'https://i.ibb.co/82Gc7rR/Marker.png',
+  //             iconSize: [25, 41],
+  //             iconAnchor: [12, 41],
+  //           })
+  //         }
+  //       >
+  //         <Popup>
+  //           A pretty CSS3 popup. <br /> Easily customizable.
+  //         </Popup>
+  //       </Marker>
+  //     </MapContainer>
+
+  //   );
+  // };
+
   return (
     <Stack spacing={4} padding={10}>
       <Field name="fullName">
@@ -125,33 +157,7 @@ export default function StepTwoForm() {
             </Button>
           )}
 
-          {coordinates && (
-            <MapContainer
-              center={coordinates}
-              zoom={13}
-              scrollWheelZoom={false}
-              style={{ height: 400, width: '100%' }}
-            >
-              <TileLayer
-                attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-              />
-              <Marker
-                position={coordinates}
-                icon={
-                  new Icon({
-                    iconUrl: 'https://i.ibb.co/82Gc7rR/Marker.png',
-                    iconSize: [25, 41],
-                    iconAnchor: [12, 41],
-                  })
-                }
-              >
-                <Popup>
-                  A pretty CSS3 popup. <br /> Easily customizable.
-                </Popup>
-              </Marker>
-            </MapContainer>
-          )}
+          {coordinates && <LeafletMap />}
 
           <Field name="transitNote" mt={5}>
             {({ field }: IProps) => (

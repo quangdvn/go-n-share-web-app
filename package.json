@@ -28,8 +28,6 @@
     "react-dom": "^17.0.1",
     "react-icons": "^4.2.0",
     "react-leaflet": "^3.1.0",
-    "react-leaflet-universal": "^2.2.1",
-    "react-map-gl": "^6.1.12",
     "sass": "^1.32.8",
     "yup": "^0.32.9"
   },

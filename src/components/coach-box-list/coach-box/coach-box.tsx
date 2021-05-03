@@ -2,7 +2,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/no-children-prop */
 import { Box, Text } from '@chakra-ui/react';
-import { useCallback } from 'react';
 import { Coach } from '../coach-box-list';
 import Trip from './trip/trip';
 

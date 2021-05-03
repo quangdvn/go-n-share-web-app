@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import {
   reqConfig,
   gnsTripApi,
@@ -34,6 +35,12 @@ export const getCoordinates = async (address, postCode) => {
       `https://apis.wemap.asia/geocode-1/search?key=JsKGJWHJJxxENLWZGIBNOyTLPC&text=${address}&boundary.gid=${postCode}&size=1`,
       reqConfig
     );
+    if (_.isEmpty(res.data.features)) {
+      alert(
+        'Không tìm thấy vị trí trên bản đồ, vui lòng điền lại địa chỉ chính xác!!'
+      );
+      return null;
+    }
     return res.data.features[0].geometry.coordinates;
   } catch (err) {
     console.log(err);

@@ -56,6 +56,7 @@ export default function SearchBox() {
         query: reqBody,
       });
     }
+    setLoading(false);
   };
   return (
     <Flex
@@ -83,6 +84,7 @@ export default function SearchBox() {
           </option>
           {cities.map((city, index) => (
             <option
+              disabled={formData.arrivalId === city.sub_name}
               value={city.sub_name}
               key={index}
               selected={
@@ -131,6 +133,7 @@ export default function SearchBox() {
           {cities.map((city, index) => (
             <option
               value={city.sub_name}
+              disabled={formData.departureId === city.sub_name}
               key={index}
               selected={
                 formData.arrivalId === city.sub_name ||

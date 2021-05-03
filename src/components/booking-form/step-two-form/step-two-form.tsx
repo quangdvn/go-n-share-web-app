@@ -22,9 +22,11 @@ import { Field, useFormikContext } from 'formik';
 import { BiPhone } from 'react-icons/bi';
 import { useRouter } from 'next/router';
 import { MappingPostCodeCity } from 'src/constants/city-district';
+import dynamic from 'next/dynamic';
 import { IProps } from '../booking-form';
 import { getCoordinates } from '../../../api/action';
-import LeafletMap from '../../Map/Map';
+
+const Map = dynamic(() => import('../../Map/Map'), { ssr: false });
 
 export interface FormikProps {
   paymentMethod: string;
@@ -44,57 +46,22 @@ export default function StepTwoForm() {
   const [coordinates, setCoordinates] = useState<any>(null);
   const [loading, setLoading] = useState(false);
   const { values, setValues } = useFormikContext<FormikProps>();
-  const [viewport, setViewport] = useState({
-    latitude: 37.7577,
-    longitude: -122.4376,
-    zoom: 8,
-  });
   const router = useRouter();
   const handleGetLocation = async () => {
     const { address } = values;
     const postCode = MappingPostCodeCity[`${router.query.departure}`];
     setLoading(true);
     const coordinatesRes = await getCoordinates(address, postCode);
-    console.log('coordinates', coordinatesRes);
+    if (coordinatesRes) {
+      console.log('coordinates', coordinatesRes);
+      setCoordinates([coordinatesRes[1], coordinatesRes[0]]);
+      setValues({
+        ...values,
+        location: [`${coordinatesRes[1]}`, `${coordinatesRes[0]}`],
+      });
+    }
     setLoading(false);
-    setCoordinates([coordinatesRes[1], coordinatesRes[0]]);
-    setValues({
-      ...values,
-      location: [`${coordinatesRes[1]}`, `${coordinatesRes[0]}`],
-    });
   };
-
-  // const renderMap = () => {
-  //   const { MapContainer, TileLayer, Marker, Popup } = require('react-leaflet');
-  //   return (
-  //     <MapContainer
-  //       center={coordinates}
-  //       zoom={13}
-  //       scrollWheelZoom={false}
-  //       style={{ height: 400, width: '100%' }}
-  //     >
-  //       <TileLayer
-  //         attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-  //         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-  //       />
-  //       <Marker
-  //         position={coordinates}
-  //         icon={
-  //           new Icon({
-  //             iconUrl: 'https://i.ibb.co/82Gc7rR/Marker.png',
-  //             iconSize: [25, 41],
-  //             iconAnchor: [12, 41],
-  //           })
-  //         }
-  //       >
-  //         <Popup>
-  //           A pretty CSS3 popup. <br /> Easily customizable.
-  //         </Popup>
-  //       </Marker>
-  //     </MapContainer>
-
-  //   );
-  // };
 
   return (
     <Stack spacing={4} padding={10}>
@@ -141,7 +108,6 @@ export default function StepTwoForm() {
           }}
         />
       </FormControl>
-      <LeafletMap />
 
       {isTransit && (
         <Stack spacing={4}>
@@ -166,6 +132,8 @@ export default function StepTwoForm() {
               Xác nhận ví trí trên bản đồ
             </Button>
           )}
+
+          {coordinates && <Map coordinates={coordinates} />}
 
           <Field name="transitNote" mt={5}>
             {({ field }: IProps) => (

@@ -3,11 +3,10 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable react/no-children-prop */
 import { useEffect, useState } from 'react';
-import { Box } from '@chakra-ui/react';
-import Terminal from './coach-box/coach-box';
-import { searchTrip } from '../../api/action';
 import { useRouter } from 'next/router';
 import _ from 'lodash';
+import Terminal from './coach-box/coach-box';
+import { searchTrip } from '../../api/action';
 
 export interface Trip {
   id: number;

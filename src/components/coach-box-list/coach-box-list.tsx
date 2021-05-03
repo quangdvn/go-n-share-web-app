@@ -6,6 +6,8 @@ import { useEffect, useState } from 'react';
 import { Box } from '@chakra-ui/react';
 import Terminal from './coach-box/coach-box';
 import { searchTrip } from '../../api/action';
+import { useRouter } from 'next/router';
+import _ from 'lodash';
 
 export interface Trip {
   id: number;
@@ -42,35 +44,34 @@ interface TerminalProps {
   coaches: Coach[];
 }
 
-interface CoachBoxListProps {
-  reqBody: any;
-}
-
-export default function CoachBoxList({ reqBody }: CoachBoxListProps) {
+export default function CoachBoxList() {
   const [terminalList, setTerminalList] = useState<TerminalProps[]>([]);
+  const router = useRouter();
+  const { query } = router;
 
   useEffect(() => {
-    const getTerminalList = async () => {
-      const res = await searchTrip(reqBody);
-      setTerminalList(res);
-    };
-    getTerminalList();
-  }, []);
+    if (!_.isEmpty(query)) {
+      const getTerminalList = async () => {
+        const res = await searchTrip(query);
+        if (res) {
+          setTerminalList(res);
+        }
+      };
+      getTerminalList();
+    }
+  }, [query]);
 
-  if (terminalList.length > 0) {
-    return (
-      <>
-        {terminalList.map((terminal, index) => (
-          <Terminal
-            key={index}
-            departureTerminal={terminal.departureTerminal}
-            arriveTerminal={terminal.arriveTerminal}
-            coaches={terminal.coaches}
-            basePrice={terminal.basePrice}
-          />
-        ))}
-      </>
-    );
-  }
-  return <Box />;
+  return (
+    <>
+      {terminalList.map((terminal, index) => (
+        <Terminal
+          key={index}
+          departureTerminal={terminal.departureTerminal}
+          arriveTerminal={terminal.arriveTerminal}
+          coaches={terminal.coaches}
+          basePrice={terminal.basePrice}
+        />
+      ))}
+    </>
+  );
 }

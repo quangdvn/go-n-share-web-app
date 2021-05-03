@@ -34,7 +34,6 @@ export const getCoordinates = async (address, postCode) => {
       `https://apis.wemap.asia/geocode-1/search?key=JsKGJWHJJxxENLWZGIBNOyTLPC&text=${address}&boundary.gid=${postCode}&size=1`,
       reqConfig
     );
-    console.log('coordinates;', res.data.features[0].geometry.coordinates);
     return res.data.features[0].geometry.coordinates;
   } catch (err) {
     console.log(err);

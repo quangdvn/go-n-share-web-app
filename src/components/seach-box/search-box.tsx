@@ -55,7 +55,6 @@ export default function SearchBox() {
         pathname: '/result-search',
         query: reqBody,
       });
-      setLoading(false);
     }
   };
   return (

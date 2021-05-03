@@ -44,15 +44,24 @@ export default function StepTwoForm() {
   const [coordinates, setCoordinates] = useState<any>(null);
   const [loading, setLoading] = useState(false);
   const { values, setValues } = useFormikContext<FormikProps>();
+  const [viewport, setViewport] = useState({
+    latitude: 37.7577,
+    longitude: -122.4376,
+    zoom: 8,
+  });
   const router = useRouter();
   const handleGetLocation = async () => {
     const { address } = values;
     const postCode = MappingPostCodeCity[`${router.query.departure}`];
     setLoading(true);
-    const res = await getCoordinates(address, postCode);
+    const coordinatesRes = await getCoordinates(address, postCode);
+    console.log('coordinates', coordinatesRes);
     setLoading(false);
-    setCoordinates([res[1], res[0]]);
-    setValues({ ...values, location: [`${res[1]}`, `${res[0]}`] });
+    setCoordinates([coordinatesRes[1], coordinatesRes[0]]);
+    setValues({
+      ...values,
+      location: [`${coordinatesRes[1]}`, `${coordinatesRes[0]}`],
+    });
   };
 
   // const renderMap = () => {
@@ -132,6 +141,7 @@ export default function StepTwoForm() {
           }}
         />
       </FormControl>
+      <LeafletMap />
 
       {isTransit && (
         <Stack spacing={4}>
@@ -156,8 +166,6 @@ export default function StepTwoForm() {
               Xác nhận ví trí trên bản đồ
             </Button>
           )}
-
-          {coordinates && <LeafletMap />}
 
           <Field name="transitNote" mt={5}>
             {({ field }: IProps) => (

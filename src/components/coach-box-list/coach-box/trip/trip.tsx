@@ -19,7 +19,7 @@ import { Trip } from '../../coach-box-list';
 interface TripProps {
   trip: Trip;
   seatNumber: number;
-  numberPlate: number;
+  numberPlate: string;
   departureTerminal: string;
   arriveTerminal: string;
   basePrice: number;
@@ -34,10 +34,16 @@ export default function TripComponent({
   basePrice,
 }: TripProps) {
   const [showBookingForm, setShowBookingForm] = useState(false);
+  const formatNumber = (num: number) =>
+    num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
   const imageRandom = useMemo(
     () => `/image/${Math.floor(Math.random() * 15 + 1)}.jpeg`,
     []
   );
+  const vip = useMemo(() => Math.floor(Math.random() * 2 + 1), []);
+  const star = useMemo(() => Math.floor(Math.random() * 5 + 1), []);
+  const amenity = useMemo(() => Math.floor(Math.random() * 5), []);
+  const totalReview = useMemo(() => Math.floor(Math.random() * 35 + 10), []);
   return (
     <Box
       borderWidth="1px"
@@ -62,7 +68,7 @@ export default function TripComponent({
         <Box p="6" width="100%">
           <Flex justifyContent="space-between">
             <Flex justifyContent="flex-start">
-              {Math.floor(Math.random() * 2 + 1) === 1 && (
+              {vip === 1 && (
                 <Badge borderRadius="full" px="2" colorScheme="teal">
                   VIP
                 </Badge>
@@ -85,15 +91,11 @@ export default function TripComponent({
                 .map((_, i) => (
                   <StarIcon
                     key={i}
-                    color={
-                      i < Math.floor(Math.random() * 5 + 1)
-                        ? 'teal.500'
-                        : 'gray.300'
-                    }
+                    color={i < star ? 'teal.500' : 'gray.300'}
                   />
                 ))}
               <Box as="span" ml="2" color="gray.600" fontSize="sm">
-                {Math.floor(Math.random() * 35 + 10)} reviews
+                {totalReview} reviews
               </Box>
             </Center>
           </Flex>
@@ -121,7 +123,7 @@ export default function TripComponent({
               </Flex>
             </Box>
             <Box color="accentColor" fontSize={22} fontWeight="bold">
-              {basePrice}đ
+              {formatNumber(basePrice)}đ
             </Box>
           </Flex>
 
@@ -132,7 +134,7 @@ export default function TripComponent({
             mt={2}
             width="250px"
           >
-            {amenities[Math.floor(Math.random() * 5)].map((data, id) => (
+            {amenities[amenity].map((data, id) => (
               <GridItem key={id}>
                 <Center
                   bg="#e0992b"

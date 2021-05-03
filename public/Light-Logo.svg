@@ -7,17 +7,17 @@
         <g id="Symbol-/-Light-Logo" transform="translate(-39.000000, 0.000000)">
             <g id="Group-5">
                 <g id="Group-4" transform="translate(87.000000, 0.000000)">
-                    <circle id="Oval" stroke="#FFEB3B" fill="#FFEB3B" cx="151" cy="151" r="150.5"></circle>
+                    <circle id="Oval" stroke="#319795" fill="#319795" cx="151" cy="151" r="150.5"></circle>
                     <g id="Group-3" transform="translate(43.000000, 79.000000)">
                         <g id="Group-2" transform="translate(113.000000, 0.000000)">
-                            <circle id="Oval" stroke="#FFEB3B" fill="#FFFFFF" cx="51.5" cy="51.5" r="51"></circle>
-                            <circle id="Oval" stroke="#FFFFFF" fill="#FFEB3B" cx="52" cy="52" r="29.5"></circle>
+                            <circle id="Oval" stroke="#319795" fill="#FFFFFF" cx="51.5" cy="51.5" r="51"></circle>
+                            <circle id="Oval" stroke="#FFFFFF" fill="#319795" cx="52" cy="52" r="29.5"></circle>
                         </g>
                         <g id="Group">
                             <circle id="Oval-Copy" stroke="#FFFFFF" fill="#FFFFFF" cx="51.5" cy="51.5" r="51"></circle>
-                            <circle id="Oval-Copy-2" stroke="#FFEB3B" fill="#FFEB3B" cx="52" cy="52" r="29.5"></circle>
-                            <path d="M92.5,20 L74.5,32.5 C75.2352811,33.6325625 75.9019477,34.6325625 76.5,35.5 C78.1196745,37.8492369 79,40 79.5,41.5 C80,43 81.1316801,44.8311479 81.5,47 C81.6586972,47.9344887 81.8253639,49.6011554 82,52 L83.5,52 L84,52 L103,52 C102.981253,47.7814198 102.814587,44.7814198 102.5,43 C101.852253,39.3319818 100.848215,36.2184097 100,34 C99.1055587,31.6606921 97.6602558,27.9549797 95.5,24.5 C94.5794956,23.0278021 93.5794956,21.5278021 92.5,20 Z" id="Path-3" fill="#FFEB3B"></path>
-                            <line x1="82" y1="52" x2="103" y2="52" id="Path-2" stroke="#FFEB3B"></line>
+                            <circle id="Oval-Copy-2" stroke="#319795" fill="#319795" cx="52" cy="52" r="29.5"></circle>
+                            <path d="M92.5,20 L74.5,32.5 C75.2352811,33.6325625 75.9019477,34.6325625 76.5,35.5 C78.1196745,37.8492369 79,40 79.5,41.5 C80,43 81.1316801,44.8311479 81.5,47 C81.6586972,47.9344887 81.8253639,49.6011554 82,52 L83.5,52 L84,52 L103,52 C102.981253,47.7814198 102.814587,44.7814198 102.5,43 C101.852253,39.3319818 100.848215,36.2184097 100,34 C99.1055587,31.6606921 97.6602558,27.9549797 95.5,24.5 C94.5794956,23.0278021 93.5794956,21.5278021 92.5,20 Z" id="Path-3" fill="#319795"></path>
+                            <line x1="82" y1="52" x2="103" y2="52" id="Path-2" stroke="#319795"></line>
                             <path d="M82,52.5 L55.5,52.5 L55.5,53 L55.5,70 L76,70 C77.1277111,68.6846938 77.9610445,67.5180271 78.5,66.5 C79.0389555,65.4819729 79.7056222,63.8153062 80.5,61.5 C81.3284687,59.8625214 81.8284687,58.5291881 82,57.5 C82.1715313,56.4708119 82.1715313,54.8041453 82,52.5 Z" id="Path-4" fill="#FFFFFF"></path>
                         </g>
                         <text id="and-share" font-family="OpenSans-Bold, Open Sans" font-size="30" font-weight="bold" letter-spacing="-0.725" fill="#FFFFFF">
@@ -25,7 +25,7 @@
                         </text>
                     </g>
                 </g>
-                <text id="Transporting-worths" font-family="OpenSans-Bold, Open Sans" font-size="30" font-weight="bold" letter-spacing="-0.725" fill="#AFB42B">
+                <text id="Transporting-worths" font-family="OpenSans-Bold, Open Sans" font-size="30" font-weight="bold" letter-spacing="-0.725" fill="#1C7C7C">
                     <tspan x="38.7499023" y="334">Transporting worths sharing</tspan>
                 </text>
             </g>
